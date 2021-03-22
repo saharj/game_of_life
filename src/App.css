@@ -3,7 +3,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #28385c;
   height: 10vh;
   display: flex;
   flex-direction: column;
@@ -11,4 +11,32 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+body {
+  height: 85vh;
+}
+
+.grids {
+  width: 420px;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 2rem;
+  border: 1px solid #555;
+}
+
+.grids .square {
+  border: 1px solid #555;
+}
+
+.actions {
+  width: 28%;
+  margin: 0 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.actions button {
+  width: 20%;
 }
