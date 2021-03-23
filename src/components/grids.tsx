@@ -1,23 +1,58 @@
 import React, { useEffect, useState } from 'react';
 
 export interface Props {
-    count: number
+    row: number
+    col: number
 }
 
 const Grids: React.FC<Props> = (props) => {
-    const [squareCount, setSquareCount] = useState(5);
     const [width, setWidth] = useState(78);
+    const [height, setHeight] = useState(78);
+    const [checked, setChecked] = useState(["10-10", "3-8"]);
 
     useEffect(() => {
-        setSquareCount(props.count * props.count);
-        setWidth(420 / props.count - 2);
-    }, [props.count])
+        setWidth(420 / props.col - 2);
+        setHeight(420 / props.row - 2);
+    }, [props.row, props.col])
+
+    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+        const squareId = e.currentTarget.id;
+        if (checked.includes(squareId)) {
+            setChecked(checked.filter(item => item !== squareId));
+        } else {
+            setChecked([...checked, squareId])
+        }
+    }
+
+    const squareStyle: any = (id: string) => {
+        let bg: string = "white";
+        if (checked.includes(id)) {
+            bg = "red";
+        }
+        return {
+            "width": width,
+            "height": height,
+            "backgroundColor": bg
+        };
+    }
 
     return (
         <div>
             <div className="grids">
-                {[...Array(squareCount)].map(i => {
-                    return <div key={i} className="square" style={{ "width": width, "height": width }}></div>
+                {props.row && [...Array(props.row)].map((value: undefined, r: number) => {
+                    return [...Array(props.col)].map((value: undefined, c: number) => {
+                        const id: string = r.toString() + "-" + c.toString();
+                        return (
+                            <div
+                                // Adding "a" in the middle to make sure the key is always unique
+                                key={id}
+                                id={id}
+                                className="square"
+                                style={squareStyle(id)}
+                                onClick={handleClick}
+                            ></div>
+                        );
+                    });
                 })}
             </div>
             <div className="actions">

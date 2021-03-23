@@ -5,9 +5,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">Conway's Game of Life</header>
-      <body>
-        <Grids count={15} />
-      </body>
+      <div className="body">
+        <Grids row={15} col={15} />
+      </div>
     </div>
   );
 }
