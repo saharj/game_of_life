@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { nextLife, createMatrix } from "../utils/util";
 
 export interface Props {
     row: number
@@ -9,10 +10,12 @@ const Grids: React.FC<Props> = (props) => {
     const [width, setWidth] = useState(78);
     const [height, setHeight] = useState(78);
     const [checked, setChecked] = useState(["10-10", "3-8"]);
+    const [matrix, setMatrix] = useState([[0]]);
 
     useEffect(() => {
         setWidth(420 / props.col - 2);
         setHeight(420 / props.row - 2);
+        setMatrix(createMatrix(5, 5, ["0-1", "0-2", "1-2", "1-3", "2-1", "2-2"]));
     }, [props.row, props.col])
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -21,6 +24,12 @@ const Grids: React.FC<Props> = (props) => {
             setChecked(checked.filter(item => item !== squareId));
         } else {
             setChecked([...checked, squareId])
+        }
+    }
+
+    const onPlay = (e: React.MouseEvent<HTMLElement>) => {
+        if (matrix.length > 1) {
+            setChecked(nextLife(matrix, 5, 5));
         }
     }
 
@@ -56,7 +65,7 @@ const Grids: React.FC<Props> = (props) => {
                 })}
             </div>
             <div className="actions">
-                <button>Play</button>
+                <button onClick={onPlay}>Play</button>
                 <button>Pause</button>
                 <button>Stop</button>
             </div>
