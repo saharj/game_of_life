@@ -8,9 +8,7 @@ const nextLife = (matrix: number[][], r: number, c: number) => {
             cellIsAlive = matrix[i][j] === 1 ? true : false;
             neighbors = findNeighbors(i, j, r, c);
             aliveNeighborsCount = 0;
-            // console.log(neighbors)
             for (let item of neighbors) {
-                // console.log(item);
                 if (matrix[item[0]][item[1]]) {
                     aliveNeighborsCount += 1;
                 }
@@ -27,11 +25,10 @@ const nextLife = (matrix: number[][], r: number, c: number) => {
             }
         }
     }
-    console.log(aliveCells);
     return aliveCells;
 }
 
-const createMatrix = (r: number, c: number, liveSquares: string[]) => {
+const createMatrix = (r: number, c: number) => {
     let col: number[] = new Array(c);
     col.fill(0);
     let arr: number[][] = new Array(r);
@@ -41,13 +38,17 @@ const createMatrix = (r: number, c: number, liveSquares: string[]) => {
         arr[i] = fill;
     }
 
+    return arr;
+}
+
+const updateMatrix = (matrix: number[][], liveSquares: string[]) => {
     let inds: string[];
     liveSquares.forEach(item => {
-        inds = item.split("-");  // ["1", "5"]
-        arr[parseInt(inds[0])][parseInt(inds[1])] = 1;
+        inds = item.split("-");
+        matrix[parseInt(inds[0])][parseInt(inds[1])] = 1;
     })
 
-    return arr;
+    return matrix;
 }
 
 const findNeighbors = (i: number, j: number, r: number, c: number) => {
@@ -114,4 +115,8 @@ const findNeighbors = (i: number, j: number, r: number, c: number) => {
     return neighbors;
 }
 
-export {nextLife, createMatrix};
+export {
+    nextLife,
+    createMatrix,
+    updateMatrix
+};

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { nextLife, createMatrix } from "../utils/util";
+import { nextLife, createMatrix, updateMatrix } from "../utils/util";
 
 export interface Props {
     row: number
@@ -15,8 +15,14 @@ const Grids: React.FC<Props> = (props) => {
     useEffect(() => {
         setWidth(420 / props.col - 2);
         setHeight(420 / props.row - 2);
-        setMatrix(createMatrix(5, 5, ["0-1", "0-2", "1-2", "1-3", "2-1", "2-2"]));
+        setMatrix(createMatrix(props.col, props.row));
     }, [props.row, props.col])
+
+    useEffect(() => {
+        if (width !== 78) {
+            setMatrix(updateMatrix(matrix, checked));
+        }
+    }, [matrix, checked, width])
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
         const squareId = e.currentTarget.id;
@@ -29,7 +35,7 @@ const Grids: React.FC<Props> = (props) => {
 
     const onPlay = (e: React.MouseEvent<HTMLElement>) => {
         if (matrix.length > 1) {
-            setChecked(nextLife(matrix, 5, 5));
+            setChecked(nextLife(matrix, props.col, props.row));
         }
     }
 
