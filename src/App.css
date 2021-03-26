@@ -1,10 +1,12 @@
 .App {
   text-align: center;
+  background-color: #efeee3;
+  height: 100vh;
 }
 
 .App-header {
   background-color: #28385c;
-  height: 10vh;
+  height: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,26 +19,57 @@
   height: 85vh;
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 84%;
+  margin: 2rem auto;
+}
+
 .grids {
   width: 420px;
   display: flex;
   flex-flow: row wrap;
-  margin: 2rem;
-  border: 1px solid #555;
+  margin: 2rem 4rem;
+  border: 3px solid #555;
+  background-color: white;
 }
 
 .grids .square {
-  border: 1px solid #555;
+  border: 1px solid #ccc;
 }
 
 .actions {
-  width: 28%;
-  margin: 0 2rem;
+  width: 30%;
+  margin: 4rem 2rem;
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .actions button {
-  width: 20%;
+  width: 60%;
+  height: 2.6rem;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.play {
+  background-color: #8eca8ea6;
+  border: 2px solid green;
+}
+.pause {
+  background-color: #f1d264ab;
+  border: 2px solid #9e9132;
+}
+.stop {
+  background-color: #e07f5aa6;
+  border: 2px solid rgb(150 2 2);
+}
+.size {
+  font-weight: 400;
+  border: 2px solid #28385c;
+  background-color: #dbdfe2;
 }

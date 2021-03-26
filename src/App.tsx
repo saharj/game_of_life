@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <header className="App-header">Conway's Game of Life</header>
       <div className="body">
-        <Grids row={15} col={15} />
+        <Grids row={25} col={25} />
       </div>
     </div>
   );
