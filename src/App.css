@@ -1,7 +1,6 @@
 .App {
   text-align: center;
   background-color: #efeee3;
-  height: 100vh;
 }
 
 .App-header {
@@ -13,10 +12,6 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.body {
-  height: 85vh;
 }
 
 .wrapper {
@@ -60,8 +55,8 @@
   background-color: #8eca8ea6;
   border: 2px solid green;
 }
-.pause {
-  background-color: #f1d264ab;
+.clear {
+  background-color: #efda8fab;
   border: 2px solid #9e9132;
 }
 .stop {

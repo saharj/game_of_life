@@ -5,6 +5,7 @@ import useInterval from "./useInterval";
 export interface Props {
     row: number
     col: number
+    updateGrid: any
 }
 
 const Grids: React.FC<Props> = (props) => {
@@ -80,6 +81,10 @@ const Grids: React.FC<Props> = (props) => {
         };
     }
 
+    const onSizeClick = (r: number, c: number) => {
+        props.updateGrid(r, c);
+    }
+
     return (
         <div className="wrapper">
             <div className="grids">
@@ -102,9 +107,9 @@ const Grids: React.FC<Props> = (props) => {
                 <button className="play" onClick={onPlay}>Play</button>
                 <button className="stop" onClick={onPause}>Stop</button>
                 <button className="clear" onClick={onClear}>clear</button>
-                <button className="size">25x25</button>
-                <button className="size">30x30</button>
-                <button className="size">35x35</button>
+                <button className="size" onClick={() => onSizeClick(25, 25)}>25x25</button>
+                <button className="size" onClick={() => onSizeClick(30, 30)}>30x30</button>
+                <button className="size" onClick={() => onSizeClick(35, 35)}>35x35</button>
             </div>
         </div>
     );
