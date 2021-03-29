@@ -2,31 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { nextLife, createMatrix } from "../utils/util";
 import useInterval from "./useInterval";
 
-export interface Props {
-    row: number
-    col: number
-    updateGrid: any
-}
-
-const Grids: React.FC<Props> = (props) => {
+const Grids: React.FC = () => {
     const [width, setWidth] = useState(78);
     const [height, setHeight] = useState(78);
     const [checked, setChecked] = useState<string[]>([]);
     const [matrix, setMatrix] = useState<number[][]>([[]]);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [delay, setDelay] = useState<number>(1500);
+    const [delay, setDelay] = useState<number>(1000);
+    const [row, setRow] = useState(25);
+    const [col, setCol] = useState(25);
 
     useEffect(() => {
-        setWidth(420 / props.col - 2);
-        setHeight(420 / props.row - 2);
-    }, [props.row, props.col])
+        setWidth(420 / col - 2);
+        setHeight(420 / row - 2);
+    }, [row, col]);
 
     useEffect(() => {
         // Make sure createMatrix is called after props are passed
         if (width !== 78) {
-            setMatrix(createMatrix(props.col, props.row, checked));
+            setMatrix(createMatrix(col, row, checked));
         }
-    }, [props, checked, width])
+    }, [checked, col, row, width]);
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
@@ -47,7 +43,7 @@ const Grids: React.FC<Props> = (props) => {
 
     const repeat = () => {
         if (checked.length > 0) {
-            setChecked(nextLife(matrix, props.col, props.row));
+            setChecked(nextLife(matrix, col, row));
         }
     }
 
@@ -66,7 +62,12 @@ const Grids: React.FC<Props> = (props) => {
         e.preventDefault();
         setIsPlaying(false);
         setChecked([]);
-        setMatrix(createMatrix(props.col, props.row, []));
+        setMatrix(createMatrix(col, row, []));
+    }
+
+    const onSizeClick = (r: number, c: number) => {
+        setRow(r);
+        setCol(c);
     }
 
     const squareStyle: any = (id: string) => {
@@ -81,15 +82,11 @@ const Grids: React.FC<Props> = (props) => {
         };
     }
 
-    const onSizeClick = (r: number, c: number) => {
-        props.updateGrid(r, c);
-    }
-
     return (
         <div className="wrapper">
             <div className="grids">
-                {props.row && [...Array(props.row)].map((value: undefined, r: number) => {
-                    return [...Array(props.col)].map((value: undefined, c: number) => {
+                {row && [...Array(row)].map((value: undefined, r: number) => {
+                    return [...Array(col)].map((value: undefined, c: number) => {
                         const id: string = r.toString() + "-" + c.toString();
                         return (
                             <div
