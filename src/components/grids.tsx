@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { nextLife, createMatrix, updateMatrix } from "../utils/util";
+import { nextLife, createMatrix } from "../utils/util";
+import useInterval from "./useInterval";
 
 export interface Props {
     row: number
@@ -10,19 +11,21 @@ const Grids: React.FC<Props> = (props) => {
     const [width, setWidth] = useState(78);
     const [height, setHeight] = useState(78);
     const [checked, setChecked] = useState<string[]>([]);
-    const [matrix, setMatrix] = useState([[0]]);
+    const [matrix, setMatrix] = useState<number[][]>([[]]);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [delay, setDelay] = useState<number>(1500);
 
     useEffect(() => {
         setWidth(420 / props.col - 2);
         setHeight(420 / props.row - 2);
-        setMatrix(createMatrix(props.col, props.row));
     }, [props.row, props.col])
 
     useEffect(() => {
+        // Make sure createMatrix is called after props are passed
         if (width !== 78) {
-            setMatrix(updateMatrix(matrix, checked));
+            setMatrix(createMatrix(props.col, props.row, checked));
         }
-    }, [matrix, checked, width])
+    }, [props, checked, width])
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
@@ -37,7 +40,7 @@ const Grids: React.FC<Props> = (props) => {
 
     const onPlay = (e: React.MouseEvent<HTMLElement>) => {
         if (matrix.length > 1) {
-            next();
+            setIsPlaying(true);
         }
     }
 
@@ -46,14 +49,16 @@ const Grids: React.FC<Props> = (props) => {
             setChecked(nextLife(matrix, props.col, props.row));
         }
     }
-    const next = () => {
-        let intId;
-        clearInterval(intId);
-        intId = setInterval(repeat, 2000);
-    }
+
+    useInterval(
+        repeat,
+        // Delay in milliseconds or null to stop it
+        isPlaying ? delay : null,
+    )
 
     const onPause = (e: React.MouseEvent<HTMLElement>) => {
-        console.log("Paused");
+        e.preventDefault();
+        setIsPlaying(false);
     }
 
     const squareStyle: any = (id: string) => {
@@ -88,8 +93,8 @@ const Grids: React.FC<Props> = (props) => {
             </div>
             <div className="actions">
                 <button className="play" onClick={onPlay}>Play</button>
-                <button className="pause" onClick={onPause}>Pause</button>
-                <button className="stop">Stop</button>
+                <button className="stop" onClick={onPause}>Stop</button>
+                <button className="clear">clear</button>
                 <button className="size">25x25</button>
                 <button className="size">30x30</button>
                 <button className="size">35x35</button>

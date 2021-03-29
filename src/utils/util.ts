@@ -28,20 +28,16 @@ const nextLife = (matrix: number[][], r: number, c: number) => {
     return aliveCells;
 }
 
-const createMatrix = (r: number, c: number) => {
+const createMatrix = (r: number, c: number, liveSquares: string[]) => {
     let col: number[] = new Array(c);
     col.fill(0);
-    let arr: number[][] = new Array(r);
+    let matrix: number[][] = new Array(r);
     let fill: number[];
     for (let i = 0; i < r; i++) {
         fill = col.slice();
-        arr[i] = fill;
+        matrix[i] = fill;
     }
 
-    return arr;
-}
-
-const updateMatrix = (matrix: number[][], liveSquares: string[]) => {
     let inds: string[];
     liveSquares.forEach(item => {
         inds = item.split("-");
@@ -118,5 +114,4 @@ const findNeighbors = (i: number, j: number, r: number, c: number) => {
 export {
     nextLife,
     createMatrix,
-    updateMatrix
 };
