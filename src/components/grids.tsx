@@ -61,6 +61,13 @@ const Grids: React.FC<Props> = (props) => {
         setIsPlaying(false);
     }
 
+    const onClear = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        setIsPlaying(false);
+        setChecked([]);
+        setMatrix(createMatrix(props.col, props.row, []));
+    }
+
     const squareStyle: any = (id: string) => {
         let bg: string = "#eee";
         if (checked.length > 0 && checked.includes(id)) {
@@ -94,7 +101,7 @@ const Grids: React.FC<Props> = (props) => {
             <div className="actions">
                 <button className="play" onClick={onPlay}>Play</button>
                 <button className="stop" onClick={onPause}>Stop</button>
-                <button className="clear">clear</button>
+                <button className="clear" onClick={onClear}>clear</button>
                 <button className="size">25x25</button>
                 <button className="size">30x30</button>
                 <button className="size">35x35</button>
