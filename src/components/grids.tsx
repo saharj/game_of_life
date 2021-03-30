@@ -70,6 +70,22 @@ const Grids: React.FC = () => {
         setCol(c);
     }
 
+    const onSpeedChange = (speed: string) => {
+        if (speed === "fast") {
+            if (delay > 210) {
+                setDelay(delay - 200);
+            } else {
+                setDelay(200);
+            }
+        } else {
+            if (delay < 5000) {
+                setDelay(delay + 300);
+            } else {
+                setDelay(5000);
+            }
+        }
+    }
+
     const squareStyle: any = (id: string) => {
         let bg: string = "#eee";
         if (checked.length > 0 && checked.includes(id)) {
@@ -107,6 +123,10 @@ const Grids: React.FC = () => {
                 <button className="size" onClick={() => onSizeClick(25, 25)}>25x25</button>
                 <button className="size" onClick={() => onSizeClick(30, 30)}>30x30</button>
                 <button className="size" onClick={() => onSizeClick(35, 35)}>35x35</button>
+                <div className="speed">
+                    <button className="slow" onClick={() => onSpeedChange("slow")}>Slower</button>
+                    <button className="fast" onClick={() => onSpeedChange("fast")}>Faster</button>
+                </div>
             </div>
         </div>
     );
