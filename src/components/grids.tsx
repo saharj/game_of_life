@@ -11,6 +11,7 @@ const Grids: React.FC = () => {
     const [delay, setDelay] = useState<number>(1000);
     const [row, setRow] = useState(25);
     const [col, setCol] = useState(25);
+    const [gen, setGen] = useState<number>(0);
 
     useEffect(() => {
         setWidth(420 / col - 2);
@@ -44,6 +45,7 @@ const Grids: React.FC = () => {
     const repeat = () => {
         if (checked.length > 0) {
             setChecked(nextLife(matrix, col, row));
+            setGen(gen + 1);
         }
     }
 
@@ -58,16 +60,22 @@ const Grids: React.FC = () => {
         setIsPlaying(false);
     }
 
-    const onClear = (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
+    const reset = () => {
         setIsPlaying(false);
+        setGen(0);
         setChecked([]);
         setMatrix(createMatrix(col, row, []));
+    }
+
+    const onClear = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        reset();
     }
 
     const onSizeClick = (r: number, c: number) => {
         setRow(r);
         setCol(c);
+        reset();
     }
 
     const onSpeedChange = (speed: string) => {
@@ -100,6 +108,7 @@ const Grids: React.FC = () => {
 
     return (
         <div className="wrapper">
+            <p className="gen">Generation # {gen}</p>
             <div className="grids">
                 {row && [...Array(row)].map((value: undefined, r: number) => {
                     return [...Array(col)].map((value: undefined, c: number) => {

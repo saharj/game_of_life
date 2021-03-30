@@ -23,6 +23,12 @@
   margin: 2rem auto;
 }
 
+.gen {
+  position: absolute;
+  left: 18.4rem;
+  top: 36rem;
+}
+
 .grids {
   width: 420px;
   display: flex;
